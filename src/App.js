@@ -2,8 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import EmailCard from './EmailCard';
-import PreviewMeeting from './MeetingPreview';  // Importing PreviewMeeting component
+import PreviewMeeting from './MeetingPreview';
+import config from './config';
 import './App.css';
+
+const backendUrl = config.backendUrl;
 
 function App() {
   const [input, setInput] = useState("");
@@ -16,11 +19,13 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const chatBoxRef = useRef(null);
 
+  console.log("backendUrl:", backendUrl);
+
   useEffect(() => {
     const fetchHistory = async () => {
       if (sessionId) {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/get_history?session_id=${sessionId}`);
+          const response = await axios.get(`${backendUrl}/get_history?session_id=${sessionId}`);
           setMessages(response.data.history);
         } catch (error) {
           console.error("Error fetching history:", error);
@@ -80,7 +85,7 @@ function App() {
         }
         formData.append("question", input);
 
-        const response = await axios.post("http://127.0.0.1:8000/upload_pdf", formData, {
+        const response = await axios.post(`${backendUrl}/upload_pdf`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         
@@ -90,7 +95,7 @@ function App() {
           text: formatMessageContent(response.data.message)
         };
       } else {
-        const response = await axios.post("http://127.0.0.1:8000/process_input", {
+        const response = await axios.post(`${backendUrl}/process_input`, {
           user_input: input,
           session_id: sessionId
         });

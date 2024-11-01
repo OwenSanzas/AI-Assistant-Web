@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from './config';
+
+const backendUrl = config.backendUrl;
+
 
 const MeetingPreview = ({ meetingData, onClose, isLoading: initialLoading }) => {
   const [editableData, setEditableData] = useState(meetingData);
@@ -37,7 +41,7 @@ const MeetingPreview = ({ meetingData, onClose, isLoading: initialLoading }) => 
         attendees: editableData.attendees
       };
 
-      const response = await axios.post('http://localhost:8000/confirm_meeting', meetingRequest);
+      const response = await axios.post(`${backendUrl}/confirm_meeting`, meetingRequest);
 
       if (response.data.status === 'success') {
         setConfirmationStatus({

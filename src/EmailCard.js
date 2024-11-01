@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from './config';
+
+
+const backendUrl = config.backendUrl;
+
 
 const EmailCard = ({ emailData, onClose, isLoading: initialLoading }) => {
   const [editableData, setEditableData] = useState(emailData);
@@ -22,7 +27,7 @@ const EmailCard = ({ emailData, onClose, isLoading: initialLoading }) => {
       setIsSending(true);
       setSendStatus(null);
 
-      const response = await axios.post('http://localhost:8000/send_email', editableData);
+      const response = await axios.post(`${backendUrl}/send_email`, editableData);
       
       if (response.data.status === 'success') {
         setSendStatus({
