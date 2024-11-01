@@ -1,9 +1,9 @@
-const ENV = process.env.ENV;
+const ENV = process.env.REACT_APP_ENV;
 
 const config = {
   backendUrl: ENV === "prod"
-    ? "https://your-production-backend-url.com"  // 生产环境 URL
-    : "http://127.0.0.1:8000",                   // 本地开发 URL
+    ? "https://ai-helper-e8f29bf455ac.herokuapp.com"
+    : "http://127.0.0.1:8000",                
 };
 
 export default config;

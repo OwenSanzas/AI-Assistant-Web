@@ -7,6 +7,7 @@ import config from './config';
 import './App.css';
 
 const backendUrl = config.backendUrl;
+const ENV = process.env.ENV;
 
 function App() {
   const [input, setInput] = useState("");
@@ -20,6 +21,7 @@ function App() {
   const chatBoxRef = useRef(null);
 
   console.log("backendUrl:", backendUrl);
+  console.log('ENV:', ENV);
 
   useEffect(() => {
     const fetchHistory = async () => {
